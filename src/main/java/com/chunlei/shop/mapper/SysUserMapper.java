@@ -1,10 +1,11 @@
 package com.chunlei.shop.mapper;
 
 import com.chunlei.shop.entity.SysUser;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.chunlei.shop.sql.SysUserSql;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.Map;
 
 /**
  * @Created by lcl on 2019/8/22 0022
@@ -12,16 +13,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserMapper {
 
-    @Insert("INSERT INTO app_user(`appToken`,`wxOpenId`, `loginTime`,`cTime`) VALUES (#{appToken},#{wxOpenId},NOW(),NOW())")
+    @Insert("INSERT INTO user_info(`appToken`,`wxOpenId`, `loginTime`,`cTime`) VALUES (#{appToken},#{wxOpenId},NOW(),NOW())")
     int insertOne(SysUser sysUser);
 
-    @Update("UPDATE app_user SET wxOpenId=#{wxOpenId},wxHeadUrl=#{wxHeadUrl},uTime=NOW() WHERE userId=#{userId}")
-    int addWxInfo(SysUser sysUser);
+    @Update("UPDATE user_info SET userName=#{userName},wxHeadUrl=#{wxHeadUrl},uTime=NOW() WHERE appToken=#{appToken}")
+    int addWxInfoByToken(SysUser sysUser);
 
-    @Select("SELECT * FROM app_user WHERE wxOpenId=#{wxOpenId}")
-    SysUser findByOpenid(String wxOpenId);
+    @SelectProvider(type= SysUserSql.class, method="reqParams")
+    SysUser findByParams(Map<String,String> params);
 
-    @Update("UPDATE app_user SET loginTime=NOW() WHERE userId=#{userId}")
+    @Update("UPDATE user_info SET loginTime=NOW() WHERE userId=#{userId}")
     int updateLoginTime(Integer userId);
 
 

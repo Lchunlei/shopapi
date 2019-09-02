@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Created by lcl on 2019/8/22 0022
@@ -59,5 +56,24 @@ public class SysUserController {
         }
         return resp;
     }
+
+    @RequestMapping(value = "/wxInfo",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value="更新微信用户信息", notes="根据token更新用户信息")
+    public ApiResp wxInfo(@RequestBody SysUser sysUser){
+        log.info("\n更新微信用户信息--->"+sysUser);
+        ApiResp resp = new ApiResp();
+        userService.updateWxInfo(sysUser,resp);
+        return resp;
+    }
+
+    @RequestMapping(value = "/auth",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value="用户信息校验", notes="根据token校验获取用户信息")
+    public ApiResp wxInfo(@RequestParam String token){
+        log.info("\n用户信息校验--->"+token);
+        ApiResp<SysUser> resp = new ApiResp();
+        userService.aurhInfo(token,resp);
+        return resp;
+    }
+
 
 }

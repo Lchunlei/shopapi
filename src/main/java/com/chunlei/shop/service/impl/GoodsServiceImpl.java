@@ -65,5 +65,25 @@ public class GoodsServiceImpl implements GoodsService {
 
     }
 
+    @Override
+    public void findGoodsList(Integer pageSize, Integer pageNum, Integer recommendStatus, ApiResp<List<BaseProduct>> resp) {
+        if(pageNum==null||pageNum.equals(0)){
+            //返回第一页
+            List<BaseProduct> products = productMapper.findAlls(recommendStatus,0,pageSize);
+            if(products.isEmpty()){
+                resp.respErr(MsgConstant.DATA_NULL);
+            }else {
+                resp.setRespData(products);
+            }
+        }else {
+            List<BaseProduct> products = productMapper.findAlls(recommendStatus,(pageNum-1)*pageSize,pageSize);
+            if(products.isEmpty()){
+                resp.respErr(MsgConstant.DATA_NULL);
+            }else {
+                resp.setRespData(products);
+            }
+        }
+    }
+
 
 }

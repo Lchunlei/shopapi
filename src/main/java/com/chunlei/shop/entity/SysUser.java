@@ -18,6 +18,20 @@ public class SysUser {
     private Date cTime;
     private Date uTime;
 
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "userId=" + userId +
+                ", appToken='" + appToken + '\'' +
+                ", userName='" + userName + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", userMobile='" + userMobile + '\'' +
+                ", wxOpenId='" + wxOpenId + '\'' +
+                ", wxHeadUrl='" + wxHeadUrl + '\'' +
+                '}';
+    }
+
     public String getAppToken() {
         return appToken;
     }

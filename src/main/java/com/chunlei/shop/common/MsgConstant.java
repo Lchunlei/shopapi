@@ -13,4 +13,8 @@ public class MsgConstant {
 
     public static final String DATA_NULL = "所查数据为空！";
 
+    public static final String OPE_ERR = "操作无效";
+
+
+
 }
